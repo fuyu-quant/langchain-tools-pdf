@@ -59,6 +59,7 @@ class PDFTool_ja(BaseTool):
 
         split_text = [text[x:x+3] for x in range(0, len(text), 50)]
 
+        input_text = ""
         for i in split_text:
             input_text += i + "<br/>\n"
 
@@ -66,7 +67,7 @@ class PDFTool_ja(BaseTool):
 
 
         # PDFファイルの作成
-        p = SimpleDocTemplate("sample.pdf", pagesize=portrait(A4))
+        p = SimpleDocTemplate("repote.pdf", pagesize=portrait(A4))
         p.setFont('HeiseiMin-W3', size = 5*mm)
 
 
