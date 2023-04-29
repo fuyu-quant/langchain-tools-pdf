@@ -1,0 +1,4 @@
+reportlab
+langchain==0.0.152
+openai==00.27.5
+google-search-results

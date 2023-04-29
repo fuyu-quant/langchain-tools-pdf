@@ -1,12 +1,12 @@
 version: '3.9'
 services:
   notebook:
-    container_name: scientific-paper-generation
+    container_name: langchain-tools-pdf
     image: jupyter/datascience-notebook
     ports:
       - '8010:8010'
     environment:
       - JUPYTER_ENABLE_LAB=yes
     volumes:
-      - /Users/tanakatouma/vscode/scientific-paper-generation/:/home/scientific-paper-generation/
+      - /Users/tanakatouma/vscode/langchain-tools-pdf/:/home/langchain-tools-pdf/
     command: start-notebook.sh --NotebookApp.token=''
