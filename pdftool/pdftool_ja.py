@@ -45,7 +45,8 @@ class PDFTool_ja(BaseTool):
             )
 
         prompt2 = """
-        {query}について必要なことを検索し，内容を300字以内でまとめてください．
+        {query}について必要なことを検索し，内容を500字以内で日本語でまとめてください．
+        検索は一回のみでお願いします．
         """.format(query=query)
 
         text = agent.run(prompt2)
@@ -64,7 +65,7 @@ class PDFTool_ja(BaseTool):
         c.showPage()
         c.save()
 
-        result = "PDFファイルを作成しました．"
+        result = "PDFファイルを作成したので実行を終了します．"
         return result
 
     async def _arun(self, query: str) -> str:
