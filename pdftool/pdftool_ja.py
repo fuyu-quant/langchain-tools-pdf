@@ -25,20 +25,20 @@ class PDFTool_ja(BaseTool):
         """Use the tool."""
         
         model_name="gpt-3.5-turbo"
-        llm = OpenAI(temperature=0, model_name=model_name)
+        pdf_llm = OpenAI(temperature=0, model_name=model_name)
 
 
         # タイトル作成
         prompt1 = """
         {query}の書類を作る上で適切なタイトルを教えてください．出力はタイトルのみでお願いします．
         """.format(query=query)
-        title = llm(prompt1)
+        title = pdf_llm(prompt1)
 
 
         # コンテンツ作成
         tools = load_tools(["serpapi"])
         agent = initialize_agent(
-            llm = llm, 
+            llm = pdf_llm, 
             tools = tools, 
             agent="zero-shot-react-description",
             verbose=True, 
@@ -64,7 +64,7 @@ class PDFTool_ja(BaseTool):
         c.showPage()
         c.save()
 
-        result = "PDF file has been created."
+        result = "PDFファイルを作成しました．"
         return result
 
     async def _arun(self, query: str) -> str:
