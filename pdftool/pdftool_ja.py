@@ -42,7 +42,6 @@ class PDFTool_ja(BaseTool):
             tools = tools, 
             agent="zero-shot-react-description",
             verbose=True, 
-            return_intermediate_steps=True
             )
 
         prompt2 = """
