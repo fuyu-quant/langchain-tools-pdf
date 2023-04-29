@@ -3,6 +3,12 @@ from reportlab.lib.pagesizes import A4, portrait, landscape
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.cidfonts import UnicodeCIDFont
 from reportlab.lib.units import mm
+import os
+from reportlab.lib.colors import deeppink, yellow
+from reportlab.platypus import Paragraph, Spacer, PageBreak, FrameBreak, SimpleDocTemplate
+from reportlab.lib.styles import ParagraphStyle, ParagraphStyle
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.enums import TA_JUSTIFY, TA_RIGHT, TA_CENTER, TA_LEFT
 
 
 from langchain.llms import OpenAI
@@ -30,7 +36,7 @@ class PDFTool_ja(BaseTool):
 
         # タイトル作成
         prompt1 = """
-        {query}の書類を作る上で適切なタイトルを教えてください．出力はタイトルのみでお願いします．
+        {query}の書類を作る上で適切な日本語のタイトルを教えてください．出力はタイトルのみでお願いします．
         """.format(query=query)
         title = pdf_llm(prompt1)
 
@@ -51,19 +57,41 @@ class PDFTool_ja(BaseTool):
 
         text = agent.run(prompt2)
 
+        split_text = [text[x:x+3] for x in range(0, len(text), 50)]
+
+        for i in split_text:
+            input_text += i + "<br/>\n"
 
 
 
-        c = canvas.Canvas("report.pdf")
-        c.setFont('HeiseiMin-W3', size = 5*mm)
+
+        # PDFファイルの作成
+        p = SimpleDocTemplate("sample.pdf", pagesize=portrait(A4))
+        p.setFont('HeiseiMin-W3', size = 5*mm)
+
+
+        # スタイルの指定
+        styles                  = getSampleStyleSheet()
+        my_style                = styles['Normal']
+        my_style.fontSize       = 6*mm
+        my_style.leading        = 10*mm # 段落内の行間
+
+        story                   = [Spacer(1, 10 * mm)]
+
+        p.drawString(30, 800, title)
+
+        story.append( Paragraph(input_text, my_style) )
+        story.append( Spacer(1, 3 * mm) )
+
+        p.build(story)
 
 
         # 文字列の挿入
-        c.drawString(30, 800, title)
-        c.drawString(30, 600, text)
+        #c.drawString(30, 800, title)
+        #c.drawString(30, 600, text)
         
-        c.showPage()
-        c.save()
+        #c.showPage()
+        #c.save()
 
         result = "PDFファイルを作成したので実行を終了します．"
         return result
