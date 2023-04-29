@@ -68,7 +68,7 @@ class PDFTool_ja(BaseTool):
 
         # PDFファイルの作成
         p = SimpleDocTemplate("repote.pdf", pagesize=portrait(A4))
-        p.setFont('HeiseiMin-W3', size = 5*mm)
+        #p.setFont('HeiseiMin-W3', size = 5*mm)
 
 
         # スタイルの指定
