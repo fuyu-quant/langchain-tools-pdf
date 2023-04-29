@@ -1,0 +1,12 @@
+version: '3.9'
+services:
+  notebook:
+    container_name: scientific-paper-generation
+    image: jupyter/datascience-notebook
+    ports:
+      - '8010:8010'
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+    volumes:
+      - /Users/tanakatouma/vscode/scientific-paper-generation/:/home/scientific-paper-generation/
+    command: start-notebook.sh --NotebookApp.token=''
